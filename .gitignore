@@ -1,0 +1,47 @@
+# Compiled source #
+###################
+*.class
+*.exe
+*.so
+*.bin
+
+# Temporary files #
+###################
+tmp
+
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs #
+######################
+*.log
+
+# OS generated files #
+######################
+.idea/
+.code/
+.vscode/
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+*.lock
+
+__pycache__
+
+# Framework #
+#############
+generated/
+build/
+
+# File is generated while make framework/java
+FRAMEWORK_VERSION

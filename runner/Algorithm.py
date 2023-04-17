@@ -14,7 +14,8 @@ class Algorithm:
                                                'algorithm_path',
                                                'framework_dir',
                                                'config',
-                                               'timeout'])
+                                               'timeout',
+                                               'js_engine'])
 
     prm = None
 
@@ -25,7 +26,9 @@ class Algorithm:
 
     def __init__(self):
         self.__generators = {'java': os.path.join(self.__DIR_PATH,
-                                                  "config_generators", "JavaGenerator.py")}
+                                                  "config_generators", "JavaGenerator.py"),
+                             'js': os.path.join(self.__DIR_PATH,
+                                                "config_generators", "JSGenerator.py")}
 
     @staticmethod
     def __is_runable(file):

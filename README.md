@@ -1,10 +1,10 @@
 # Algorithms runner
 
 ### Targets
-* Add settings for P-core and E-core 
 * Add Rust platform
 * Add js platform
-* Octane tests for platfoms
+* Add settings for P-core and E-core 
+* Octane algorithms for platfoms
 * SunSpider algorithms
 * Develop mobile runner
 * Add more results formats
@@ -14,15 +14,25 @@
 
 ### Host dependencies
 * Java 8 (jre, jdk)
+* JerryScript (for java host)
+* GCC (for JerryScript)
+* cmake (for JerryScript)
 * Python modules: scipy
 
 
 ### How to setup
 * Clone repo
 
-#### Java
+#### Setup Java
 * Run ```cd framework/java && make framework_java```
 
+#### Setup QuickJS
+```
+git clone https://github.com/bellard/quickjs.git
+cd quickjs
+make -j16
+export QJS_PATH=$PWD/qjs
+```
 
 ### How to run
 * Main runner script is `<src_root>/runner/runner.py`
@@ -36,8 +46,13 @@ usage: runner.py -t TARGET input
 
 Supported `TARGET` platforms:
 - javahost (jh)
-- rusthost (rh)
+- jshost (jsh)
 
+* Fast start Java 
+```python3 runner/runner.py -t jh algorithms/Test/Test1/java/Test.java```
+
+* Fast start JavaScript 
+```python3 runner/runner.py -t jsh --js-engine="${QJS_PATH}" algorithms/Test/Test1/js/Test.js```
 
 ![screenshot](docs/media/screenshot.png)
 

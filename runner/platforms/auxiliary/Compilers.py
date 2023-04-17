@@ -148,3 +148,33 @@ class Compilers:
             return u
         else:
             raise Exception(f'Build native host failed for {algorithm_dirname}')
+
+    def build_gen_cfg_c(self, unit, framework_dir, algorithm_dirname, target="host", sh=None):
+        cc = None
+        flags = "-shared "
+
+        cfg_name = "GeneratedConfig"
+
+        if target == "host":
+            cc = "gcc"
+            flags += "-fPIC"
+        else:
+            cc = self.get_native_compiler(sh)
+            flags += ""
+
+        # TODO: unit.env['fw_path']
+        include = os.path.join(framework_dir, "include")
+
+        cfg_file = os.path.join(algorithm_dirname, cfg_name + ".c")
+        out_file = os.path.join(algorithm_dirname, cfg_name + ".so")
+
+        cmd = "{} -o {} {} -I{} {}".format(cc, out_file, cfg_file, include, flags)
+
+        res = self.__sh.run(cmd, measure_time=True)
+
+        if res.ret != 0:
+            raise Exception("so build failed")
+
+        # size = os.path.getsize(out_file)
+        unit.update_values(res, 0, 'js', out_file)
+        return unit

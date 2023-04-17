@@ -23,17 +23,21 @@ class AlgorithmRunner:
     # platforms
     __RUST_HOST = ("rusthost", "rh")
     __JAVA_HOST = ("javahost", "jh")
+    __JS_HOST   = ("jshost", "jsh")
 
-    __TARGETS = (__RUST_HOST, __JAVA_HOST)
+    __TARGETS = (__RUST_HOST, __JAVA_HOST, __JS_HOST)
 
-    __HOST_TARGETS = __JAVA_HOST + __RUST_HOST
+    __HOST_TARGETS = __JAVA_HOST + __RUST_HOST + __JS_HOST
 
     __LANG = {__RUST_HOST[0]: "rust",
               __JAVA_HOST[0]: "java",
+              __JS_HOST[0]: "js",
               }
 
     __EXT = {'java': ".java",
-             'rust': ".rt"}
+             'rust': ".rt",
+             'js': ".js",
+             }
 
     __SCR_PATH = os.path.realpath(os.path.dirname(__file__))
     __ROOT_PATH = os.path.join(__SCR_PATH, "..")
@@ -72,7 +76,8 @@ class AlgorithmRunner:
                                          algorithm_path=algorithm_path,
                                          framework_dir=self.__FW_PATH,
                                          config=cfg,
-                                         timeout=args.timeout)
+                                         timeout=args.timeout,
+                                         js_engine=args.js_engine)
 
         measure_iters = args.measure_iters
         if not measure_iters:
@@ -187,6 +192,7 @@ class ArgumentParser(argparse.ArgumentParser):
         self.add_argument("-g", "--seconds", action='store_true', help="Output result in seconds")
         self.add_argument("-cores", "--core-amount", default=1, type=int,
                           help="Number of used cores")
+        self.add_argument("--js-engine", help="Sets the path to the JavaScript engine")
 
         self.add_argument("--timeout", default=900, type=int, metavar="SECONDS",
                           help="Sets a timeout for algorithm")
@@ -198,6 +204,7 @@ class ArgumentParser(argparse.ArgumentParser):
                           help="Time for measuring")
         self.add_argument("-c", "--concurrency", default=1, type=int,
                           help="Number of algorithm possible threads")
+                          
 
 
 if __name__ == "__main__":
